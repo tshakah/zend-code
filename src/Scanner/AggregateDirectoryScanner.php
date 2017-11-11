@@ -19,12 +19,17 @@ class AggregateDirectoryScanner extends DirectoryScanner
     protected $isScanned = false;
 
     /**
-     * @param  bool $returnScannerClass
-     * @todo not implemented
+     * Returns all unique namespaces of classes defined in the provided directories
+     *
+     * @return array|string[]
      */
-    public function getNamespaces($returnScannerClass = false)
+    public function getNamespaces()
     {
-        // @todo
+        $namespaces = [];
+        foreach ($this->directories as $scanner) {
+            $namespaces = array_merge($namespaces, $scanner->getNamespaces());
+        }
+        return array_values(array_unique($namespaces));
     }
 
     public function getIncludes($returnScannerClass = false)

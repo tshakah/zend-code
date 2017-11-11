@@ -133,11 +133,20 @@ class DirectoryScanner implements ScannerInterface
     }
 
     /**
-     * @todo implement method
+     * Returns all unique namespaces of classes defined in this directory
+     *
+     * @return array|string[]
      */
     public function getNamespaces()
     {
-        // @todo
+        $namespaces = [];
+        foreach ($this->getClassNames() as $className) {
+            $parts = explode('\\', $className);
+            if (count($parts) > 1) {
+                $namespaces[] = implode('\\', array_slice($parts, 0, -1));
+            }
+        }
+        return array_values(array_unique($namespaces));
     }
 
     /**
