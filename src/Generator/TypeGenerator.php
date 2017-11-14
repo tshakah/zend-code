@@ -43,6 +43,8 @@ final class TypeGenerator implements GeneratorInterface
      */
     private static $internalPhpTypes = [
         'void',
+        'self',
+        'parent',
         'int',
         'float',
         'string',
