@@ -417,29 +417,9 @@ class MethodGenerator extends AbstractMemberGenerator
         }
 
         if (! method_exists($returnType, 'getName')) {
-            return self::expandLiteralType((string) $returnType, $methodReflection);
+            return (string)$returnType;
         }
 
-        return ($returnType->allowsNull() ? '?' : '')
-            . self::expandLiteralType($returnType->getName(), $methodReflection);
-    }
-
-    /**
-     * @param string           $literalReturnType
-     * @param ReflectionMethod $methodReflection
-     *
-     * @return string
-     */
-    private static function expandLiteralType($literalReturnType, ReflectionMethod $methodReflection)
-    {
-        if ('self' === strtolower($literalReturnType)) {
-            return $methodReflection->getDeclaringClass()->getName();
-        }
-
-        if ('parent' === strtolower($literalReturnType)) {
-            return $methodReflection->getDeclaringClass()->getParentClass()->getName();
-        }
-
-        return $literalReturnType;
+        return ($returnType->allowsNull() ? '?' : '') . $returnType->getName();
     }
 }
